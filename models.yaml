@@ -1,0 +1,22 @@
+users:
+    title: Пользователи
+    fields:
+        - {id: name, title: Имя, type: char}
+        - {id: paycheck, title: Зарплата, type: int}
+        - {id: date_joined, title: Дата поступления на работу, type: date}
+
+rooms:
+    title: Комнаты
+    fields:
+        - {id: department, title: Отдел, type: char}
+        - {id: floor, title: Этаж, type: int}
+        - {id: spots, title: Вместимость, type: int}
+
+cars:
+    title: Cars
+    fields:
+        - {id: brand, title: Brand, type: char}
+        - {id: price, title: Price, type: int}
+        - {id: description, title: Description, type: char}
+        - {id: release_date, title: Release_date, type: date}
+        - {id: model, title: Model, type: char}

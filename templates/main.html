@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+{% load i18n admin_modify %}
+{% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/base.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/forms.css' %}" />
+   <script type="text/javascript">window.__admin_media_prefix__ = "{% static 'admin/' %}";</script>
+{#    <script type="text/javascript">window.__admin_utc_offset__ = "0";</script>#}
+
+    <script type="text/javascript" src="/admin/jsi18n/"></script>
+    <script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin/js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin/js/actions.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin/js/calendar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script>
+
+
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+{#<script type="text/tpl">#}
+    {{ form }}
+{#</script>#}
+<ul class="models-menu">
+    {% for model, descr in models_data.items %}
+        <li>
+            <a href="#" onclick="return false;" data-model="{{ model }}">{{ descr.title }}</a>
+        </li>
+    {% endfor %}
+</ul>
+<div class="table">
+
+</div>
+
+<script type="application/javascript">
+    var tables_meta_data = {{ models_data_json | safe }}
+</script>
+<script src="{%  static 'js/main.js' %}"></script>
+</body>
+</html>
