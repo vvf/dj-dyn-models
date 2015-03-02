@@ -1,6 +1,6 @@
 # here all logics
 
-api_prefix=window.location.origin + '/api/'
+api_prefix = '/api/'
 
 input_type_map =
   int:'<input type="number" name="{id}" value="{value}" class="vIntegerField">'
@@ -115,7 +115,7 @@ show_table=(model)->
   $table = $('<table></table>')
   $table.append '<tr>' + header_html.join('') + '</tr>'
   $new = new Row(model, {}, null, $table)
-  $.get api_prefix+model, (data, status)->
+  $.get api_prefix+model+'/', (data, status)->
     row_data = JSON.parse(data)
     for row in row_data
       new Row(model, row.fields, row.pk, $table)

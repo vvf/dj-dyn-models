@@ -3,7 +3,7 @@
   var $, $model_menu, $table_container, Row, api_prefix, csrf_token, date_re, input_type_map, numeric_RE, show_table, type_validators,
     __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  api_prefix = window.location.origin + '/api/';
+  api_prefix = '/api/';
 
   input_type_map = {
     int: '<input type="number" name="{id}" value="{value}" class="vIntegerField">',
@@ -174,7 +174,7 @@
     $table = $('<table></table>');
     $table.append('<tr>' + header_html.join('') + '</tr>');
     $new = new Row(model, {}, null, $table);
-    $.get(api_prefix + model, function(data, status) {
+    $.get(api_prefix + model + '/', function(data, status) {
       var row, row_data, _j, _len1;
       row_data = JSON.parse(data);
       for (_j = 0, _len1 = row_data.length; _j < _len1; _j++) {
