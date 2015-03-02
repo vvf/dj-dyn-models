@@ -5,7 +5,7 @@ import os
 
 # Create your models here.
 # models_yaml = open(os.path.join(os.path.dirname(os.path.dirname(__file__)),'models.yaml'), 'r')
-models_yaml = open(os.path.join(settings.BASE_DIR, 'models.yaml'), 'r')
+models_yaml = open(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'models.yaml'), 'r')
 
 models_data = yaml.load(models_yaml)
 dyn_models = {}
