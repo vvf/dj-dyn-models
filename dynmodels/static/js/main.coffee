@@ -1,7 +1,8 @@
 # here all logics
 
 api_prefix = '/api/'
-loading_img = '/static/img/loading.gif'
+loading_img = '<img src="/static/img/loading.gif"/>'
+save_latency = 2000
 
 input_type_map =
   int:'<input type="number" name="{id}" value="{value}" class="vIntegerField">'
@@ -48,7 +49,7 @@ class Row
     @delayed_save_timer = setTimeout ()->
       if self.is_valid
         self.startSaving()
-    ,2000
+    ,save_latency
 
   startSaving: ()->
     # start request to save.
@@ -120,7 +121,7 @@ show_table=(model)->
     header_html.push "<th>#{column.title}</th>"
   $table = $('<table></table>')
   $table.append '<tr>' + header_html.join('') + '</tr>'
-  $table.append '<tr class="loading"><td colspan="' + (tables_meta_data[model].fields.length+1) + '"> '+ loading_img +' Loading...</td></tr>'
+  $table.append '<tr class="loading"><td colspan="'+(tables_meta_data[model].fields.length+1)+'"> '+loading_img+' Loading...</td></tr>'
   $new = new Row(model, {}, null, $table)
   $.get api_prefix+model+'/', (data, status)->
     row_data = JSON.parse(data)
