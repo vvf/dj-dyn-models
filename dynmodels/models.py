@@ -29,7 +29,7 @@ for tbl, params in models_data.iteritems():
     for field_data in params['fields']:
         ftype_meta = field_types[field_data['type']]
         type_params = ftype_meta['params']
-        print ( ftype_meta['class'], type_params )
+        # print ( ftype_meta['class'], type_params )
         #print ftype_meta['class'](**type_params)
         type_params['verbose_name'] = field_data['title']
         model.add_to_class(field_data['id'], ftype_meta['class'](**type_params))
