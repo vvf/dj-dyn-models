@@ -90,7 +90,7 @@ class Row
       if f.is_invalid
         is_valid=false
 
-      if @last_data[f.id] != @row_data[f.id]
+      if not has_changes and @last_data[f.id] != @row_data[f.id]
         has_changes = yes
     @is_valid = is_valid
     if has_changes

@@ -131,7 +131,7 @@
         if (f.is_invalid) {
           is_valid = false;
         }
-        if (this.last_data[f.id] !== this.row_data[f.id]) {
+        if (!has_changes && this.last_data[f.id] !== this.row_data[f.id]) {
           has_changes = true;
         }
       }
