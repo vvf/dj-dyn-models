@@ -61,7 +61,7 @@
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         f = _ref[_i];
         f1 = $.extend({}, f);
-        f1.is_invalid = true;
+        f1.is_invalid = !id;
         this.fields.push(f1);
       }
       this.row_data.id = id;

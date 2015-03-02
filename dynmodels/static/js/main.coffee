@@ -35,7 +35,7 @@ class Row
     for f in tables_meta_data[@model].fields
       f1 = $.extend {}, f
       # by initial field is blank and blank is not valid
-      f1.is_invalid = true
+      f1.is_invalid = not id
       @fields.push f1
     @row_data.id = id
     @last_data = $.extend({}, @row_data)
