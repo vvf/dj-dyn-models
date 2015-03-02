@@ -11,5 +11,5 @@ STATIC_ROOT = 'static'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'dynmodels/static'),
+    os.path.join(BASE_DIR, '../dynmodels/static'),
 )
