@@ -20,7 +20,7 @@
       return numeric_RE.test(v);
     },
     char: function(v) {
-      return true;
+      return !!v;
     },
     date: function(v) {
       var a_date, d_date;
@@ -45,7 +45,7 @@
     Row.prototype.delayed_save_timer = null;
 
     function Row(_at_model, _at_row_data, id, _at_$table) {
-      var f, _i, _len, _ref;
+      var f, f1, _i, _len, _ref;
       this.model = _at_model;
       this.row_data = _at_row_data;
       if (id == null) {
@@ -56,7 +56,9 @@
       _ref = tables_meta_data[this.model].fields;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         f = _ref[_i];
-        this.fields.push(f);
+        f1 = $.extend({}, f);
+        f1.is_invalid = true;
+        this.fields.push(f1);
       }
       this.row_data.id = id;
       this.last_data = $.extend({}, this.row_data);
@@ -138,7 +140,7 @@
       var column, header_html, input, row_id, self, vname, _i, _len, _ref;
       row_id = this.row_data.id || 'new';
       header_html = ['<td>' + row_id + '</td>'];
-      _ref = tables_meta_data[this.model].fields;
+      _ref = this.fields;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         column = _ref[_i];
         input = input_type_map[column.type];
@@ -173,6 +175,7 @@
     }
     $table = $('<table></table>');
     $table.append('<tr>' + header_html.join('') + '</tr>');
+    $table.append('<tr class="loading"><td colspan="' + (tables_meta_data[model].fields.length + 1) + '">Loading...</td></tr>');
     $new = new Row(model, {}, null, $table);
     $.get(api_prefix + model + '/', function(data, status) {
       var row, row_data, _j, _len1;
@@ -182,7 +185,7 @@
         new Row(model, row.fields, row.pk, $table);
       }
       $table.append($new.$row);
-      $table.find('.datetimeshortcuts').remove();
+      $table.find('.datetimeshortcuts, .loading').remove();
       return DateTimeShortcuts.init();
     });
     $table_container.html($table);

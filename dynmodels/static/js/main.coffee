@@ -13,7 +13,7 @@ type_validators=
   int: (v)->
     numeric_RE.test v
   char: (v)->
-    true
+    not not v
   date: (v)->
     a_date = date_re.exec(v)
     if not a_date
@@ -31,7 +31,10 @@ class Row
   constructor: (@model, @row_data, id=null, @$table)->
     @fields = []
     for f in tables_meta_data[@model].fields
-      @fields.push f
+      f1 = $.extend {}, f
+      # by initial field is blank and blank is not valid
+      f1.is_invalid = true
+      @fields.push f1
     @row_data.id = id
     @last_data = $.extend({}, @row_data)
     @is_valid = yes
@@ -92,7 +95,7 @@ class Row
   get_table_row:()->
     row_id = @row_data.id or 'new'
     header_html = ['<td>' + row_id + '</td>']
-    for column in tables_meta_data[@model].fields
+    for column in @fields
       input = input_type_map[column.type]
       column.value = @row_data[column.id] or ''
       if column.type == 'date' and '-' in column.value
@@ -114,13 +117,14 @@ show_table=(model)->
     header_html.push "<th>#{column.title}</th>"
   $table = $('<table></table>')
   $table.append '<tr>' + header_html.join('') + '</tr>'
+  $table.append '<tr class="loading"><td colspan="' + (tables_meta_data[model].fields.length+1) + '">Loading...</td></tr>'
   $new = new Row(model, {}, null, $table)
   $.get api_prefix+model+'/', (data, status)->
     row_data = JSON.parse(data)
     for row in row_data
       new Row(model, row.fields, row.pk, $table)
     $table.append $new.$row
-    $table.find('.datetimeshortcuts').remove()
+    $table.find('.datetimeshortcuts, .loading').remove()
     DateTimeShortcuts.init()
 
   $table_container.html( $table )
