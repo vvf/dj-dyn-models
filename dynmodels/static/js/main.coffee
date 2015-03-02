@@ -1,5 +1,7 @@
 # here all logics
 
+api_prefix=window.location.origin + '/api/'
+
 input_type_map =
   int:'<input type="number" name="{id}" value="{value}" class="vIntegerField">'
   char:'<input type="text" name="{id}" value="{value}" maxlength="255" class="vTextField">'
@@ -51,7 +53,7 @@ class Row
     $td_id = @$row.find('td:first').html('Saving...') #TODO: here show image of saving animation
     self = @
     post_data = $.extend {csrfmiddlewaretoken:csrf_token, pk:@row_data.id}, @row_data
-    $.post '/api/'+@model+'/', post_data, (result, status) ->
+    $.post api_prefix+@model+'/', post_data, (result, status) ->
       result = JSON.parse result
       if result.success
         if not self.row_data.id
@@ -113,7 +115,7 @@ show_table=(model)->
   $table = $('<table></table>')
   $table.append '<tr>' + header_html.join('') + '</tr>'
   $new = new Row(model, {}, null, $table)
-  $.get '/api/'+model, (data, status)->
+  $.get api_prefix+model, (data, status)->
     row_data = JSON.parse(data)
     for row in row_data
       new Row(model, row.fields, row.pk, $table)
