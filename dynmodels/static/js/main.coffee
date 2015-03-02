@@ -1,6 +1,7 @@
 # here all logics
 
 api_prefix = '/api/'
+loading_img = '/static/img/loading.gif'
 
 input_type_map =
   int:'<input type="number" name="{id}" value="{value}" class="vIntegerField">'
@@ -53,7 +54,7 @@ class Row
     # start request to save.
     # if it calls til previous request is active - abort previous request and do a new
     console.log 'start saving', @row_data
-    $td_id = @$row.find('td:first').html('Saving...') #TODO: here show image of saving animation
+    $td_id = @$row.find('td:first').html(loading_img) #TODO: here show image of saving animation
     self = @
     post_data = $.extend {csrfmiddlewaretoken:csrf_token, pk:@row_data.id}, @row_data
     $.post api_prefix+@model+'/', post_data, (result, status) ->
@@ -66,6 +67,7 @@ class Row
 
         self.row_data.id = result.row_id
         $td_id.html(self.row_data.id)
+        self.last_data = $.extend({}, self.row_data)
       else
         $td_id.html('saving error')
 
@@ -86,6 +88,7 @@ class Row
           @row_data[f.id] = val
       if f.is_invalid
         is_valid=false
+
       if @last_data[f.id] != @row_data[f.id]
         has_changes = yes
     @is_valid = is_valid
@@ -117,7 +120,7 @@ show_table=(model)->
     header_html.push "<th>#{column.title}</th>"
   $table = $('<table></table>')
   $table.append '<tr>' + header_html.join('') + '</tr>'
-  $table.append '<tr class="loading"><td colspan="' + (tables_meta_data[model].fields.length+1) + '">Loading...</td></tr>'
+  $table.append '<tr class="loading"><td colspan="' + (tables_meta_data[model].fields.length+1) + '"> '+ loading_img +' Loading...</td></tr>'
   $new = new Row(model, {}, null, $table)
   $.get api_prefix+model+'/', (data, status)->
     row_data = JSON.parse(data)
