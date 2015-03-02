@@ -4,6 +4,7 @@ from django.contrib import admin
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'dynmodels.views.main', name='main'),
+    url(r'^api/([a-zA-Z0-9_]+)/$', 'dynmodels.views.list', name='api'),
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),

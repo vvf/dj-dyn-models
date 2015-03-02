@@ -9,7 +9,7 @@
 {#    <script type="text/javascript">window.__admin_utc_offset__ = "0";</script>#}
 
     <script type="text/javascript" src="/admin/jsi18n/"></script>
-    <script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+    <script type="text/javascript"   src="{% static 'admin/js/core.js' %}"></script>
     <script type="text/javascript" src="{% static 'admin/js/jquery.js' %}"></script>
     <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
     <script type="text/javascript" src="{% static 'admin/js/actions.js' %}"></script>
@@ -19,11 +19,13 @@
 
     <meta charset="UTF-8">
     <title></title>
+<style>
+.models-menu { float: left; margin:10px}
+input.error {border: solid 1px #ff0000
+}
+</style>
 </head>
 <body>
-{#<script type="text/tpl">#}
-    {{ form }}
-{#</script>#}
 <ul class="models-menu">
     {% for model, descr in models_data.items %}
         <li>
@@ -32,7 +34,7 @@
     {% endfor %}
 </ul>
 <div class="table">
-
+{% csrf_token %}
 </div>
 
 <script type="application/javascript">
