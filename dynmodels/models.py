@@ -9,19 +9,14 @@ models_yaml = open(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'mod
 
 models_data = yaml.load(models_yaml)
 dyn_models = {}
-attrs = {
-    '__module__': __name__,
-}
+
 field_types = dict(
     char={'class': models.CharField, 'params': {'max_length': '255', 'blank': 'True', 'null': 'True'}},
     int={'class': models.IntegerField, 'params': {'null': 'True', 'blank': 'True'}},
     date={'class': models.DateField, 'params': {'null': 'True', 'blank': 'True'}}
 )
-for tbl, params in models_data.iteritems():
-    class Meta:
-        verbose_name = params['title']
 
-    attrs['Meta'] = Meta
+for tbl, params in models_data.iteritems():
     model = type(tbl, (models.Model,),
                  {'__module__': __name__, 'Meta': type('Meta', (), dict(verbose_name=params['title'],
                                                                         verbose_name_plural=params[

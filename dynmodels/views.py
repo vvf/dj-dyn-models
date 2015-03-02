@@ -41,18 +41,13 @@ def save(request, table, row_id=None):
     if table not in dyn_models:
         return HttpResponseNotFound()
     obj = None
-    if row_id is None and request.POST.get('id', '').isnumeric():
-         row_id = request.POST['id']
+    if row_id is None and request.POST.get('id', '').isdigit():
+        row_id = request.POST['id']
     if row_id is not None:
         obj = dyn_models[table].objects.filter(id=row_id).first()
     form = forms[table](request.POST, instance=obj)
-    print( form )
     if form.is_valid():
         obj = form.save()
-        return HttpResponse(json.dumps(dict(success=True,row_id=obj.id)))
+        return HttpResponse(json.dumps(dict(success=True, row_id=obj.id)))
 
-    return HttpResponse(json.dumps(dict(success=False,)))
-    # if row_id is not None:
-    #     obj = get_object_or_404(dyn_models[table], id=row_id)
-    # else:
-    #     obj = dyn_models[table].objects.create()
+    return HttpResponse(json.dumps(dict(success=False, errors=form.errors)))
