@@ -1,4 +1,4 @@
-Django==1.11.19
+Django>=1.11.22
 PyYAML==4.2b4
 SQLAlchemy==0.9.8
 argparse==1.2.1
