@@ -1,5 +1,5 @@
 Django>=1.11.22
-PyYAML==4.2b4
+PyYAML==5.4
 SQLAlchemy==0.9.8
 argparse==1.2.1
 dj-database-url==0.3.0
